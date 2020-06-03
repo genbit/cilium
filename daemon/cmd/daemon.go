@@ -422,6 +422,16 @@ func NewDaemon(ctx context.Context, dp datapath.Datapath) (*Daemon, *endpointRes
 		log.WithError(err).Warning("Unable to clean stale endpoint interfaces")
 	}
 
+	// The kube-proxy replacement should be initialized after establishing
+	// connection to kube-apiserver, as retrieving Node object for self is
+	// needed by BPF NodePort device selection.
+	initKubeProxyReplacementOptions()
+	if option.Config.EnableNodePort {
+		if err := node.InitNodePortAddrs(option.Config.Devices); err != nil {
+			log.WithError(err).Fatal("Failed to initialize NodePort addrs")
+		}
+	}
+
 	d.bootstrapIPAM()
 
 	// Start the proxy before we restore endpoints so that we can inject the
