@@ -25,7 +25,7 @@
 
    Download the Cilium release tarball and change to the kubernetes install directory:
 
-    .. parsed-literal::
+   .. parsed-literal::
 
         curl -LO |SCM_ARCHIVE_LINK|
         tar xzvf |SCM_ARCHIVE_FILENAME|

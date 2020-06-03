@@ -40,12 +40,6 @@ Install kubectl & minikube
 
      minikube start --network-plugin=cni --memory=4096
 
-4. Mount the BPF filesystem
-
-::
-
-     minikube ssh -- sudo mount bpffs -t bpf /sys/fs/bpf
-
 .. note::
 
    In case of installing Cilium for a specific Kubernetes version, the
@@ -56,24 +50,20 @@ Install kubectl & minikube
 Install Cilium
 ==============
 
-Install Cilium as `DaemonSet
-<https://kubernetes.io/docs/concepts/workloads/controllers/daemonset/>`_ into
-your new Kubernetes cluster. The DaemonSet will automatically install itself as
-Kubernetes CNI plugin.
+.. include:: k8s-install-download-release.rst
 
 .. note::
 
    In case of installing Cilium with CRIO, please see :ref:`crio-instructions` instructions.
 
+Install Cilium using Helm:
+
 .. parsed-literal::
 
-    kubectl create -f \ |SCM_WEB|\/install/kubernetes/quick-install.yaml
+   helm install cilium |CHART_RELEASE| --namespace kube-system
 
 .. include:: k8s-install-validate.rst
-.. include:: hubble-install.rst
-.. include:: getting-started-next-steps.rst
-
-
+.. include:: hubble-enable.rst
 
 Next steps
 ==========

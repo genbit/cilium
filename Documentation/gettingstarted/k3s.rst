@@ -60,13 +60,16 @@ On each node, run the following to mount the BPF Filesystem:
 Install Cilium
 ==============
 
+.. include:: k8s-install-download-release.rst
+
+Install Cilium using Helm:
+
 .. parsed-literal::
 
-    kubectl create -f \ |SCM_WEB|\/install/kubernetes/quick-install.yaml
+   helm install cilium |CHART_RELEASE| --namespace kube-system
 
 .. include:: k8s-install-validate.rst
-.. include:: hubble-install.rst
-.. include:: getting-started-next-steps.rst
+.. include:: hubble-enable.rst
 
 Now that you have a Kubernetes cluster with Cilium up and running, you can take
 a couple of next steps to explore various capabilities:
