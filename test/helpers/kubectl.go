@@ -2167,7 +2167,7 @@ func (kub *Kubectl) overwriteHelmOptions(options map[string]string) error {
 			opts["global.bpfMasquerade"] = "true"
 		}
 
-		opts["global.nodePort.device"] = devices
+		opts["global.nodePort.devices"] = devices
 
 		for key, value := range opts {
 			options = addIfNotOverwritten(options, key, value)

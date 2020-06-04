@@ -114,8 +114,11 @@ const (
 	// DebugVerbose is the argument enables verbose log message for particular subsystems
 	DebugVerbose = "debug-verbose"
 
-	// List of devices facing cluster/external network for attaching bpf_host
+	// Device facing cluster/external network for attaching bpf_host
 	Device = "device"
+
+	// Devices facing cluster/external network for attaching bpf_host
+	Devices = "devices"
 
 	// DirectRoutingDevice is the name of a device used to connect nodes in
 	// direct routing mode (only required by BPF NodePort)
@@ -2151,7 +2154,23 @@ func (c *DaemonConfig) Populate() {
 	c.DatapathMode = viper.GetString(DatapathMode)
 	c.Debug = viper.GetBool(DebugArg)
 	c.DebugVerbose = viper.GetStringSlice(DebugVerbose)
-	c.Devices = viper.GetStringSlice(Device)
+	c.Devices = viper.GetStringSlice(Devices)
+	if device := viper.GetString(Device); device != "" {
+		if c.Devices == nil {
+			c.Devices = []string{device}
+		} else {
+			found := false
+			for _, d := range c.Devices {
+				if d == device {
+					found = true
+					break
+				}
+			}
+			if !found {
+				c.Devices = append(c.Devices, device)
+			}
+		}
+	}
 	c.DirectRoutingDevice = viper.GetString(DirectRoutingDevice)
 	c.DisableConntrack = viper.GetBool(DisableConntrack)
 	c.EnableIPv4 = getIPv4Enabled()

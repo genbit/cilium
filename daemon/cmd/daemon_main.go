@@ -253,8 +253,13 @@ func init() {
 	flags.StringSlice(option.DebugVerbose, []string{}, "List of enabled verbose debug groups")
 	option.BindEnv(option.DebugVerbose)
 
-	flags.StringSliceP(option.Device, "d", []string{}, "List of devices facing cluster/external network for attaching bpf_host")
+	flags.StringP(option.Device, "d", "",
+		fmt.Sprintf("Device facing cluster/external network for attaching bpf_host. Deprecated in favor of --%s", option.Devices))
+	flags.MarkHidden(option.Device)
 	option.BindEnv(option.Device)
+
+	flags.StringSlice(option.Devices, []string{}, "List of devices facing cluster/external network for attaching bpf_host")
+	option.BindEnv(option.Devices)
 
 	flags.String(option.DirectRoutingDevice, "", "Device name used to connect nodes in direct routing mode (required only by BPF NodePort; derived automatically if empty")
 	option.BindEnv(option.DirectRoutingDevice)

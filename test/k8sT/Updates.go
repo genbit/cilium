@@ -169,7 +169,7 @@ func InstallAndValidateCiliumUpgrades(kubectl *helpers.Kubectl, oldHelmChartVers
 		// Cilium < v1.8 doesn't support multi-dev, so set only one device.
 		// If not set, then overwriteHelmOptions() will set two devices.
 		if helpers.RunsWithoutKubeProxy() {
-			opts["global.nodePort.device"] = privateIface
+			opts["global.nodePort.devices"] = privateIface
 		}
 		if registry != "" {
 			opts["global.registry"] = registry
@@ -246,7 +246,7 @@ func InstallAndValidateCiliumUpgrades(kubectl *helpers.Kubectl, oldHelmChartVers
 			"operator.image":  "operator",
 		}
 		if helpers.RunsWithoutKubeProxy() {
-			opts["global.nodePort.device"] = privateIface
+			opts["global.nodePort.devices"] = privateIface
 		}
 
 		// Eventually allows multiple return values, and performs the assertion
@@ -405,7 +405,7 @@ func InstallAndValidateCiliumUpgrades(kubectl *helpers.Kubectl, oldHelmChartVers
 			"global.nodeinit.enabled": "false",
 		}
 		if helpers.RunsWithoutKubeProxy() {
-			opts["global.nodePort.device"] = privateIface
+			opts["global.nodePort.devices"] = privateIface
 		}
 
 		EventuallyWithOffset(1, func() (*helpers.CmdRes, error) {
